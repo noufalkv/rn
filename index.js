@@ -1,7 +1,13 @@
 // In index.js of a new project
-import React, {useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
-import {View, Text, Button, StyleSheet, I18nManager} from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  I18nManager,
+  TextInput,
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import RNRestart from 'react-native-restart';
 const isRTL = I18nManager.isRTL;
@@ -22,7 +28,24 @@ const HomeScreen = props => {
 
   return (
     <View style={styles.root}>
-      <Text>Hello React Native Navigation 👋</Text>
+      {isRTL ? <Text>Hello AR 👋</Text> : <Text>Hello En 👋</Text>}
+      <TextInput
+        maxLength={10}
+        value={0}
+        style={{
+          height: 50,
+          width: '60%',
+          marginHorizontal: 10,
+          textAlign: 'left',
+          borderBottomColor: 'black',
+          backgroundColor: 'red',
+          paddingBottom: 10,
+          paddingTop: 10,
+          transform: [{scaleX: -1}],
+        }}
+        keyboardType="numeric"
+      />
+
       <Button
         title="Push Settings Screen"
         color="#710ce3"
@@ -65,6 +88,17 @@ const SettingsScreen = () => {
   );
 };
 
+const getDefaultOptions = () => {
+  return {
+    layout: {
+      orientation: ['portrait'],
+      backgroundColor: '#ffffff',
+      direction: I18nManager.isRTL ? 'rtl' : 'ltr',
+    },
+  };
+};
+
+Navigation.setDefaultOptions(getDefaultOptions());
 Navigation.registerComponent('Home', () => HomeScreen);
 Navigation.registerComponent('Settings', () => SettingsScreen);
 
